@@ -280,8 +280,10 @@ function App() {
                           <TextField
                             fullWidth
                             label="占事"
+                            multiline
+                            minRows={2}
+                            maxRows={5}
                             placeholder="例如：近期合作是否顺利"
-                            slotProps={{ htmlInput: { maxLength: 60 } }}
                             value={question}
                             onChange={(event) =>
                               setQuestion(event.currentTarget.value)

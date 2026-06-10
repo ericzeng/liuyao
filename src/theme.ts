@@ -91,43 +91,55 @@ export const theme = createTheme({
         variant: "contained",
       },
       styleOverrides: {
-        root: {
-          borderRadius: 10,
-          padding: "7px 18px",
-          transition: "all 0.18s ease",
-          "&:hover": {
-            transform: "translateY(-1px)",
-          },
-          "&:active": {
-            transform: "translateY(0)",
-          },
+        root: ({ ownerState }) => {
+          const isContainedPrimary =
+            ownerState.variant === "contained" &&
+            ownerState.color === "primary";
+          const isContainedSecondary =
+            ownerState.variant === "contained" &&
+            ownerState.color === "secondary";
+          const isOutlinedInherit =
+            ownerState.variant === "outlined" &&
+            ownerState.color === "inherit";
+
+          return {
+            borderRadius: 10,
+            padding: "7px 18px",
+            transition: "all 0.18s ease",
+            "&:hover": {
+              transform: "translateY(-1px)",
+              ...(isContainedPrimary && {
+                background: "linear-gradient(135deg, #b44441, #9a3533)",
+                boxShadow: "0 4px 14px rgba(143, 49, 46, 0.38)",
+              }),
+              ...(isContainedSecondary && {
+                background: "linear-gradient(135deg, #3d9070, #358060)",
+                boxShadow: "0 4px 14px rgba(45, 104, 83, 0.36)",
+              }),
+              ...(isOutlinedInherit && {
+                borderColor: "rgba(30, 35, 41, 0.40)",
+                background: "rgba(30, 35, 41, 0.04)",
+              }),
+            },
+            "&:active": {
+              transform: "translateY(0)",
+            },
+            ...(isContainedPrimary && {
+              background: "linear-gradient(135deg, #a33a37, #8f312e)",
+              boxShadow: "0 2px 8px rgba(143, 49, 46, 0.30)",
+            }),
+            ...(isContainedSecondary && {
+              background: "linear-gradient(135deg, #358060, #2d6853)",
+              boxShadow: "0 2px 8px rgba(45, 104, 83, 0.28)",
+            }),
+            ...(isOutlinedInherit && {
+              borderColor: "rgba(30, 35, 41, 0.22)",
+            }),
+          };
         },
         sizeSmall: {
           padding: "4px 12px",
           fontSize: "0.82rem",
-        },
-        containedPrimary: {
-          background: "linear-gradient(135deg, #a33a37, #8f312e)",
-          boxShadow: "0 2px 8px rgba(143, 49, 46, 0.30)",
-          "&:hover": {
-            background: "linear-gradient(135deg, #b44441, #9a3533)",
-            boxShadow: "0 4px 14px rgba(143, 49, 46, 0.38)",
-          },
-        },
-        containedSecondary: {
-          background: "linear-gradient(135deg, #358060, #2d6853)",
-          boxShadow: "0 2px 8px rgba(45, 104, 83, 0.28)",
-          "&:hover": {
-            background: "linear-gradient(135deg, #3d9070, #358060)",
-            boxShadow: "0 4px 14px rgba(45, 104, 83, 0.36)",
-          },
-        },
-        outlinedInherit: {
-          borderColor: "rgba(30, 35, 41, 0.22)",
-          "&:hover": {
-            borderColor: "rgba(30, 35, 41, 0.40)",
-            background: "rgba(30, 35, 41, 0.04)",
-          },
         },
       },
     },
@@ -301,19 +313,22 @@ export const theme = createTheme({
     },
     MuiAlert: {
       styleOverrides: {
-        root: {
+        root: ({ ownerState }) => ({
           borderRadius: 10,
           fontSize: "0.88rem",
-        },
-        filledSuccess: {
-          background: "linear-gradient(135deg, #358060, #2d6853)",
-        },
-        filledError: {
-          background: "linear-gradient(135deg, #b44441, #8f312e)",
-        },
-        filledWarning: {
-          background: "linear-gradient(135deg, #c67c2a, #a85f1a)",
-        },
+          ...(ownerState.variant === "filled" &&
+            ownerState.severity === "success" && {
+              background: "linear-gradient(135deg, #358060, #2d6853)",
+            }),
+          ...(ownerState.variant === "filled" &&
+            ownerState.severity === "error" && {
+              background: "linear-gradient(135deg, #b44441, #8f312e)",
+            }),
+          ...(ownerState.variant === "filled" &&
+            ownerState.severity === "warning" && {
+              background: "linear-gradient(135deg, #c67c2a, #a85f1a)",
+            }),
+        }),
       },
     },
     MuiSnackbar: {

@@ -149,6 +149,10 @@ h2 {
   margin: 18px 0;
 }
 
+.query-panel label {
+  min-width: 0;
+}
+
 label span {
   display: block;
   margin-bottom: 6px;
@@ -158,13 +162,21 @@ label span {
 }
 
 input {
+  display: block;
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
   min-height: 44px;
   border: 1px solid var(--line);
   border-radius: 6px;
   padding: 9px 11px;
   color: var(--ink);
   background: #fff;
+}
+
+input[type="datetime-local"]::-webkit-date-and-time-value {
+  min-width: 0;
+  text-align: left;
 }
 
 input:focus {
@@ -557,11 +569,64 @@ button:disabled {
     padding: 14px;
   }
 
-  .intro,
+  .intro {
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .rule-chip {
+    margin-top: 0;
+  }
+
+  .query-panel {
+    margin: 16px 0;
+  }
+
+  .coin-board {
+    padding-top: 16px;
+  }
+
+  .board-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 8px 12px;
+  }
+
+  .board-head > div {
+    display: contents;
+  }
+
+  .board-head h2 {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .board-head p {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .board-head .ghost-button {
+    align-self: start;
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .line-editor {
+    margin-top: 12px;
+  }
+
   .chart-title,
   .history-head {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  input[type="datetime-local"] {
+    font-size: 16px;
   }
 
   h1 {

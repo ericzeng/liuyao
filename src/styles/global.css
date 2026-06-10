@@ -118,6 +118,12 @@ input {
   min-height: 0;
 }
 
+.history-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
 .workspace-tabs {
   display: flex;
   flex-direction: column;
@@ -128,7 +134,6 @@ input {
 }
 
 .workspace-tab-panel > div,
-.history-panel,
 .result-panel > div {
   overflow: auto;
   /* 为 OutlinedInput 浮在边框上的 label 留出空间，避免首项被裁切 */
@@ -199,8 +204,12 @@ input {
 .history-list {
   flex: 1 1 auto;
   min-height: 0;
-  overflow: auto;
+  overflow-y: auto;
   padding-right: 2px;
+}
+
+.history-list > * {
+  flex-shrink: 0;
 }
 
 /* ─── 摘要网格 ─── */
@@ -549,6 +558,10 @@ input {
   .result-panel > div,
   .history-list {
     overflow: visible;
+  }
+
+  .history-list {
+    flex: none;
   }
 
   .mobile-action-bar {

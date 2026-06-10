@@ -323,24 +323,6 @@ function App() {
                           >
                             重置
                           </Button>
-                          <Button
-                            variant="outlined"
-                            color="secondary"
-                            disabled={!chartResult}
-                            onClick={handleCopy}
-                            startIcon={<ContentCopyIcon />}
-                          >
-                            复制文本
-                          </Button>
-                          <Button
-                            variant="outlined"
-                            color="secondary"
-                            disabled={!chartResult}
-                            onClick={handleImage}
-                            startIcon={<ImageIcon />}
-                          >
-                            生成图片
-                          </Button>
                         </Box>
                       </Stack>
                     </Box>
@@ -743,44 +725,63 @@ function ResultPanel({
           </Alert>
         ) : null}
 
-        <Stack
-          direction="row"
-          spacing={1}
+        <Box
           sx={{
-            alignItems: "flex-start",
-            flexWrap: "wrap",
-            justifyContent: "space-between",
+            borderRadius: "12px",
+            p: { xs: 1.75, sm: 2.25 },
+            background:
+              "linear-gradient(135deg, rgba(255, 253, 248, 0.95), rgba(247, 244, 237, 0.85))",
+            border: "1px solid rgba(143, 49, 46, 0.10)",
+            boxShadow: "0 2px 8px rgba(30, 35, 41, 0.04)",
           }}
         >
-          <Stack spacing={0.5}>
-            <Typography variant="h2">
-              {result.question ||
-                `${result.baseHex.name} 之 ${result.changedHex.name}`}
+          <Typography
+            sx={{
+              fontSize: { xs: "0.98rem", sm: "1.08rem" },
+              lineHeight: 1.6,
+              fontWeight: 800,
+              wordBreak: "break-word",
+            }}
+          >
+            {result.question ||
+              `${result.baseHex.name} 之 ${result.changedHex.name}`}
+          </Typography>
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            spacing={1.25}
+            sx={{
+              alignItems: { xs: "stretch", sm: "center" },
+              justifyContent: "space-between",
+              pt: 1.5,
+              mt: 1.25,
+              borderTop: "1px solid rgba(143, 49, 46, 0.08)",
+            }}
+          >
+            <Typography color="text.secondary" sx={{ fontSize: "0.82rem" }}>
+              起卦 {formatDateTime(result.datetime)}
             </Typography>
-            <Typography color="text.secondary">
-              {formatDateTime(result.datetime)}
-            </Typography>
+            <Stack direction="row" spacing={1} sx={{ flexShrink: 0 }}>
+              <Button
+                size="small"
+                variant="contained"
+                color="primary"
+                onClick={onCopy}
+                startIcon={<ContentCopyIcon />}
+              >
+                复制排盘
+              </Button>
+              <Button
+                size="small"
+                variant="outlined"
+                color="secondary"
+                onClick={onImage}
+                startIcon={<DownloadIcon />}
+              >
+                下载图片
+              </Button>
+            </Stack>
           </Stack>
-          <Stack direction="row" spacing={1}>
-            <Button
-              size="small"
-              variant="contained"
-              color="secondary"
-              onClick={onCopy}
-              startIcon={<ContentCopyIcon />}
-            >
-              复制
-            </Button>
-            <Button
-              size="small"
-              variant="outlined"
-              onClick={onImage}
-              startIcon={<ImageIcon />}
-            >
-              图片
-            </Button>
-          </Stack>
-        </Stack>
+        </Box>
 
         <Box className="summary-grid">
           <SummaryCard

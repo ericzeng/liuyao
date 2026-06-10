@@ -1,198 +1,20 @@
 <!doctype html>
 <html lang="zh-CN">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>六爻手动排盘</title>
-    <link rel="icon" href="coin_tail.png" type="image/png" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#8f312e" />
+    <title>六爻排盘</title>
+    <link rel="icon" href="/coin_tail.png" type="image/png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <main class="app-shell">
-      <section class="workspace" aria-labelledby="app-title">
-        <div class="tab-list" role="tablist" aria-label="排盘功能切换">
-          <button
-            class="tab-button is-active"
-            id="chart-tab-button"
-            type="button"
-            role="tab"
-            aria-selected="true"
-            aria-controls="chart-tab"
-            data-tab="chart"
-          >
-            六爻排盘
-          </button>
-          <button
-            class="tab-button"
-            id="history-tab-button"
-            type="button"
-            role="tab"
-            aria-selected="false"
-            aria-controls="history-tab"
-            data-tab="history"
-          >
-            历史记录
-          </button>
-        </div>
-
-        <div
-          class="tab-pane"
-          id="chart-tab"
-          role="tabpanel"
-          aria-labelledby="chart-tab-button"
-        >
-          <div class="intro">
-            <h1 id="app-title">六爻排盘</h1>
-            <div class="rule-chip">字为阴 2 · 背为阳 3</div>
-          </div>
-
-          <form class="query-panel" id="query-form">
-            <label>
-              <span>占事</span>
-              <input
-                id="question"
-                type="text"
-                maxlength="60"
-                placeholder="例如：近期合作是否顺利"
-              />
-            </label>
-            <label>
-              <span>起卦时间</span>
-              <input id="datetime" type="datetime-local" />
-            </label>
-          </form>
-
-          <section class="coin-board" aria-label="六爻铜钱输入">
-            <div class="board-head">
-              <div>
-                <h2>逐爻点币</h2>
-                <p>从初爻开始，每爻三枚铜钱。点击铜钱切换字面/背面。</p>
-              </div>
-              <button class="ghost-button" id="reset-btn" type="button">
-                重置
-              </button>
-            </div>
-            <div class="line-editor" id="line-editor"></div>
-          </section>
-
-          <div class="action-bar">
-            <button class="primary-button" id="cast-btn" type="button">
-              生成排盘
-            </button>
-            <button
-              class="secondary-button"
-              id="copy-btn"
-              type="button"
-              disabled
-            >
-              复制文本
-            </button>
-            <button
-              class="secondary-button"
-              id="image-btn"
-              type="button"
-              disabled
-            >
-              生成图片
-            </button>
-          </div>
-          <p class="status" id="status" role="status" aria-live="polite"></p>
-        </div>
-
-        <section
-          class="tab-pane hidden"
-          id="history-tab"
-          role="tabpanel"
-          aria-labelledby="history-tab-button"
-        >
-          <div class="history-head">
-            <h2 id="history-title">历史记录</h2>
-            <span>保存在本机浏览器</span>
-          </div>
-          <p class="history-empty" id="history-empty">
-            生成排盘后会记录在这里。
-          </p>
-          <div class="history-list" id="history-list"></div>
-        </section>
-      </section>
-
-      <section class="result-panel" aria-label="排盘结果">
-        <p class="restore-notice hidden" id="restore-notice">
-          以下是从历史中恢复的排盘，如需重排请先点击「重置」。
-        </p>
-
-        <div class="empty-state" id="empty-state">
-          <span>排盘结果会显示在这里</span>
-        </div>
-
-        <article class="chart-card hidden" id="chart-card">
-          <div class="chart-title">
-            <div>
-              <h2 id="hex-title"></h2>
-            </div>
-            <div class="date-pill" id="date-pill"></div>
-          </div>
-
-          <div class="summary-grid">
-            <div>
-              <span>本卦</span>
-              <strong id="base-hex"></strong>
-            </div>
-            <div>
-              <span>变卦</span>
-              <strong id="changed-hex"></strong>
-            </div>
-            <div>
-              <span>动爻</span>
-              <strong id="moving-lines"></strong>
-            </div>
-            <div>
-              <span>干支</span>
-              <strong id="ganzhi"></strong>
-            </div>
-          </div>
-
-          <div class="table-wrap">
-            <table class="chart-table">
-              <thead>
-                <tr>
-                  <th>爻位</th>
-                  <th>本卦</th>
-                  <th>变卦</th>
-                  <th>六亲</th>
-                  <th>世应</th>
-                  <th>纳甲</th>
-                </tr>
-              </thead>
-              <tbody id="chart-body"></tbody>
-            </table>
-          </div>
-        </article>
-      </section>
-    </main>
-
-    <div class="image-preview hidden" id="image-preview">
-      <div class="preview-head">
-        <strong>导出图片</strong>
-        <button class="ghost-button" id="close-preview" type="button">
-          关闭
-        </button>
-      </div>
-      <img id="export-image" alt="六爻排盘导出图" />
-      <a
-        class="primary-button download-link"
-        id="download-link"
-        download="liuyao-chart.png"
-        >下载图片</a
-      >
-    </div>
-
-    <script src="app.js"></script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
